@@ -1,0 +1,15 @@
+services:
+  takosware-web:
+    build:
+      context: .
+    container_name: takosware-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8092:80"
+    networks:
+      - takosware-edge
+
+networks:
+  takosware-edge:
+    external: true
+    name: builtwhys_default
