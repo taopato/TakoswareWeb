@@ -1,253 +1,443 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowDown,
+  ArrowRight,
   ArrowUpRight,
-  Boxes,
   BriefcaseBusiness,
-  CloudCog,
   Code2,
   Database,
   Github,
   GraduationCap,
-  Layers3,
+  Linkedin,
   Mail,
   Menu,
+  Network,
   ServerCog,
-  Smartphone,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Workflow,
   X,
 } from 'lucide-react';
 import './styles.css';
 
-const skills = [
-  { icon: Code2, title: 'Backend', items: '.NET, ASP.NET Core, C#, REST API, Clean Architecture, CQRS, MediatR, Entity Framework' },
-  { icon: Database, title: 'Veri', items: 'SQL Server, PostgreSQL, SQLite, veri modelleme, migration ve güvenli finansal işlemler' },
-  { icon: CloudCog, title: 'Altyapı', items: 'Docker, Linux, Caddy, IIS, Kestrel, AWS RDS, Hangfire, CI/CD ve gözlemlenebilirlik' },
-  { icon: Smartphone, title: 'Ürün', items: 'React Native, Expo, React, Next.js, TypeScript ve uçtan uca ürün geliştirme' },
-];
+const profileLinks = {
+  linkedin: 'https://www.linkedin.com/in/tarik-cetint%C3%BCrk/',
+  github: 'https://github.com/taopato',
+  mail: 'mailto:destek@takosware.com',
+};
 
-const projects = [
+const skillGroups = [
   {
-    name: 'Roomora',
-    type: 'Kendi ürünü',
-    description: 'Ev arkadaşları için harcama, fatura, ödeme, not ve ortak yaşam yönetimini tek akışta birleştiren mobil ürün.',
-    image: '/assets/roomora-home.png',
-    alt: 'Roomora mobil uygulamasının ana sayfa ekranı',
-    tags: ['React Native', 'Expo', '.NET', 'SQL Server'],
-    href: 'https://github.com/taopato/RoomoraMobile',
+    icon: Code2,
+    title: 'Backend geliştirme',
+    text: '.NET, ASP.NET Core, C#, REST API, Clean Architecture, CQRS, MediatR ve Entity Framework',
   },
   {
-    name: 'BuiltWhys',
-    type: 'Kendi ürünü',
-    description: 'Kısa biçimli açıklayıcı içeriklerin araştırma, üretim ve yayın operasyonunu yöneten otomasyon sistemi.',
-    image: '/assets/builtwhys-control.png',
-    alt: 'BuiltWhys kontrol merkezinin ekran görüntüsü',
-    tags: ['Python', 'Automation', 'Docker', 'YouTube API'],
-    href: 'https://github.com/taopato',
+    icon: Database,
+    title: 'Veri ve güvenlik',
+    text: 'SQL Server, PostgreSQL, veri modelleme, JWT, rol bazlı yetkilendirme ve güvenli işlem akışları',
   },
   {
-    name: 'Carvia',
-    type: 'Ürün çalışması',
-    description: 'Araç sahipliği ve servis süreçlerini daha anlaşılır hale getirmeye odaklanan ürün geliştirme çalışması.',
-    tags: ['Backend', 'Product Design', 'API'],
-    href: 'https://github.com/taopato',
+    icon: ServerCog,
+    title: 'Operasyon',
+    text: 'Docker, Ubuntu, Hangfire, loglama, CI/CD, reverse proxy ve üretim ortamı yönetimi',
   },
   {
-    name: 'Berber SaaS',
-    type: 'Ürün çalışması',
-    description: 'Randevu, müşteri ve işletme operasyonlarını sadeleştirmek için tasarlanan çok kiracılı SaaS altyapısı.',
-    tags: ['SaaS', 'Multi-tenant', '.NET'],
-    href: 'https://github.com/taopato',
+    icon: Users,
+    title: 'Ürün ve ekip',
+    text: 'Teknik kararları ürün ihtiyacıyla buluşturma, ekip içi iletişim ve uçtan uca sorumluluk',
   },
 ];
 
-function App() {
-  const [menuOpen, setMenuOpen] = React.useState(false);
+const builtWhysSteps = [
+  ['Araştırma ve yönetmenlik', 'Konu seçimi, kaynak kontrolü ve içerik yönünün belirlenmesi'],
+  ['Senaryo editörlüğü', 'Kısa format ritmine uygun metin, başlık ve kanca üretimi'],
+  ['Görsel ve ses üretimi', 'Lisanslı görseller, özgün diyagramlar, seslendirme ve altyazı'],
+  ['Kalite kontrol', 'Tekrar, özgünlük, süre, güvenlik ve platform kurallarının denetlenmesi'],
+  ['İnsan onayı ve yayın', 'Kontrol merkezinden revizyon, onay ve çoklu platform dağıtımı'],
+];
 
-  React.useEffect(() => {
-    if (window.location.pathname === '/') {
-      window.history.replaceState({}, '', '/tarikcetinturk');
-    }
-  }, []);
+function Header() {
+  const [open, setOpen] = useState(false);
 
-  const closeMenu = () => setMenuOpen(false);
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', open);
+    return () => document.body.classList.remove('menu-open');
+  }, [open]);
+
+  const closeMenu = () => setOpen(false);
 
   return (
-    <>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Tarık Çetintürk ana sayfa">
-          <span className="brand-mark">TÇ</span>
-          <span>
-            <strong>Tarık Çetintürk</strong>
-            <small>Takosware</small>
-          </span>
-        </a>
-        <button className="menu-button" onClick={() => setMenuOpen((value) => !value)} aria-label="Menüyü aç" aria-expanded={menuOpen}>
-          {menuOpen ? <X /> : <Menu />}
-        </button>
-        <nav className={menuOpen ? 'nav open' : 'nav'}>
-          <a href="#hakkimda" onClick={closeMenu}>Hakkımda</a>
-          <a href="#deneyim" onClick={closeMenu}>Deneyim</a>
-          <a href="#urunler" onClick={closeMenu}>Ürünler</a>
-          <a href="#iletisim" onClick={closeMenu}>İletişim</a>
-        </nav>
-      </header>
+    <header className="site-header">
+      <a className="brand" href="#top" onClick={closeMenu} aria-label="Sayfanın başına git">
+        <span className="brand-mark">TÇ</span>
+        <span>
+          <strong>Tarık Çetintürk</strong>
+          <small>Takosware</small>
+        </span>
+      </a>
 
+      <button
+        className="menu-button"
+        type="button"
+        aria-label={open ? 'Menüyü kapat' : 'Menüyü aç'}
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {open ? <X size={22} /> : <Menu size={22} />}
+      </button>
+
+      <nav className={open ? 'site-nav is-open' : 'site-nav'} aria-label="Ana menü">
+        <a href="#hakkimda" onClick={closeMenu}>Hakkımda</a>
+        <a href="#deneyim" onClick={closeMenu}>Deneyim</a>
+        <a href="#projeler" onClick={closeMenu}>Projeler</a>
+        <a href="#iletisim" onClick={closeMenu}>İletişim</a>
+      </nav>
+    </header>
+  );
+}
+
+function SocialLink({ href, icon: Icon, children, className = '' }) {
+  return (
+    <a className={`button-link ${className}`} href={href} target="_blank" rel="noreferrer">
+      <Icon size={18} aria-hidden="true" />
+      {children}
+    </a>
+  );
+}
+
+function RoomoraCaseStudy() {
+  return (
+    <article className="case-study roomora-case">
+      <div className="case-copy">
+        <div className="project-brand">
+          <img src="/assets/roomora-mark.png" alt="Roomora logosu" />
+          <div>
+            <span className="project-index">01 · Mobil ürün</span>
+            <h3>Roomora</h3>
+          </div>
+        </div>
+        <p className="case-lead">
+          Ev arkadaşlarının ortak harcamaları, faturaları, ödemeleri ve günlük notları tek yerde
+          yönetmesini sağlayan bir ortak yaşam uygulaması.
+        </p>
+        <p>
+          React Native ve Expo ile geliştirilen mobil istemci; .NET API, SQL Server ve JWT tabanlı
+          kimlik doğrulama altyapısıyla çalışıyor. Ürün; hızlı harcama ekleme, kişi bazlı bölüşüm,
+          düzenli giderler, kısmi ödeme ve fiş okuma gibi gerçek kullanım senaryolarını kapsıyor.
+        </p>
+        <div className="tag-list" aria-label="Roomora teknolojileri">
+          <span>React Native</span><span>Expo</span><span>.NET</span><span>SQL Server</span><span>JWT</span>
+        </div>
+        <a className="text-link" href="https://github.com/taopato/EvArkadasimMobile" target="_blank" rel="noreferrer">
+          Kaynak kodu incele <ArrowUpRight size={17} />
+        </a>
+      </div>
+
+      <div className="phone-gallery" aria-label="Roomora uygulama ekranları">
+        <figure className="phone-shot phone-shot-primary">
+          <img src="/assets/roomora-home.png" alt="Roomora ana sayfa ekranı" />
+        </figure>
+        <figure className="phone-shot">
+          <img src="/assets/roomora-expenses.png" alt="Roomora giderler ekranı" />
+        </figure>
+        <figure className="phone-shot">
+          <img src="/assets/roomora-bills.png" alt="Roomora faturalar ekranı" />
+        </figure>
+      </div>
+    </article>
+  );
+}
+
+function GezentiCaseStudy() {
+  return (
+    <article className="case-study gezenti-case">
+      <div className="case-media gezenti-media">
+        <figure className="gezenti-desktop-shot">
+          <img src="/assets/gezzenti-desktop.png" alt="Gezzenti canlı web uygulamasının masaüstü ana sayfası" />
+        </figure>
+        <figure className="gezenti-mobile-shot">
+          <img src="/assets/gezzenti-mobile.png" alt="Gezzenti canlı web uygulamasının mobil ana sayfası" />
+        </figure>
+      </div>
+      <div className="case-copy">
+        <span className="project-index">02 · TÜBİTAK ekip projesi</span>
+        <h3>Gezzenti</h3>
+        <p className="case-lead">
+          Kullanıcının ilgi alanı, konumu ve bütçesine göre keşfedilecek yerleri bir araya getiren
+          sosyal gezi platformu.
+        </p>
+        <p>
+          Trakya Üniversitesi TÜBİTAK ekibiyle geliştirilen projede backend geliştirici olarak
+          kullanıcı, mekan, kategori, yorum, puan, favori ve tercih akışlarını ele aldım; yönetim
+          ekibinde de aktif rol üstlendim. .NET 8, SQL Server, MongoDB ve JWT ile kurulan sistem
+          canlıya alınarak kullanılmaya başlandı.
+        </p>
+        <div className="tag-list" aria-label="Gezzenti teknolojileri">
+          <span>.NET 8</span><span>SQL Server</span><span>MongoDB</span><span>JWT</span><span>REST API</span>
+        </div>
+        <a className="text-link" href="https://gezzenti.com/" target="_blank" rel="noreferrer">
+          Canlı projeyi aç <ArrowUpRight size={17} />
+        </a>
+      </div>
+    </article>
+  );
+}
+
+function BuiltWhysCaseStudy() {
+  return (
+    <article className="case-study builtwhys-case">
+      <div className="case-copy">
+        <span className="project-index">03 · Otomasyon ürünü</span>
+        <h3>BuiltWhys Shorts Factory</h3>
+        <p className="case-lead">
+          Kısa format içerik üretimini fikirden insan onaylı yayına kadar yöneten, çok aşamalı bir
+          otomasyon ve kontrol merkezi.
+        </p>
+        <p>
+          n8n ile farklı servisleri aynı akışta birleştiren sistemde her aşama ayrı bir uzman rolü
+          gibi çalışıyor. Üretim tamamen başıboş bırakılmıyor; kalite ve özgünlük kontrollerinden
+          geçen içerik ancak insan onayından sonra yayın kuyruğuna alınıyor.
+        </p>
+        <ol className="process-list">
+          {builtWhysSteps.map(([title, text], index) => (
+            <li key={title}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div><strong>{title}</strong><p>{text}</p></div>
+            </li>
+          ))}
+        </ol>
+        <div className="tag-list" aria-label="BuiltWhys teknolojileri">
+          <span>n8n</span><span>Python</span><span>LLM</span><span>FFmpeg</span><span>Çoklu platform</span>
+        </div>
+      </div>
+      <div className="case-media builtwhys-media">
+        <img src="/assets/builtwhys-control.png" alt="BuiltWhys kontrol merkezi ana ekranı" />
+        <img src="/assets/builtwhys-review.png" alt="BuiltWhys içerik kalite ve onay ekranı" />
+      </div>
+    </article>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <Header />
       <main id="top">
-        <section className="hero">
-          <div className="atmosphere-lines" aria-hidden="true"><i /><i /><i /></div>
+        <section className="hero" aria-labelledby="hero-title">
           <div className="hero-inner">
             <div className="hero-copy">
               <p className="eyebrow">Backend Developer · Product Builder</p>
-              <h1>Sağlam sistemler kuruyor, onları gerçek ürünlere dönüştürüyorum.</h1>
-              <p className="hero-lead">
-                Ben Tarık Çetintürk. Takosware çatısı altında backend sistemleri, mobil uygulamalar
-                ve günlük bir problemi gerçekten çözen ürünler geliştiriyorum.
+              <h1 id="hero-title">Tarık Çetintürk</h1>
+              <p className="hero-intro">
+                Üretim ortamını bilen; sağlam ve geliştirilebilir mimariler üzerinde, küçük ölçekli
+                servislerden büyük sistemlere uzanan backend çözümleri, mobil ürünler ve günlük işi
+                gerçekten kolaylaştıran otomasyonlar geliştiriyorum.
               </p>
               <div className="hero-actions">
-                <a className="button primary" href="#urunler">Seçili ürünler <ArrowDown size={18} /></a>
-                <a className="button secondary" href="https://github.com/taopato" target="_blank" rel="noreferrer"><Github size={18} /> GitHub</a>
+                <a className="button-link primary" href="#projeler">
+                  Projeleri incele <ArrowDown size={18} />
+                </a>
+                <SocialLink href={profileLinks.linkedin} icon={Linkedin}>LinkedIn</SocialLink>
+              </div>
+              <div className="hero-facts" aria-label="Kısa bilgiler">
+                <span><BriefcaseBusiness size={17} /> Backend Developer</span>
+                <span><Network size={17} /> Takosware kurucusu</span>
+                <span><GraduationCap size={17} /> Trakya Üniversitesi</span>
               </div>
             </div>
-            <div className="portrait-shell" role="img" aria-label="Tarık Çetintürk monogramı">
-              <div className="portrait">
-                <span>TÇ</span>
-                <small>Backend · Mobile · Product</small>
-              </div>
-              <div className="portrait-caption">
-                <span>Edremit, Balıkesir</span>
-                <strong>Bağımsız ürün geliştirici</strong>
-              </div>
-            </div>
+            <figure className="hero-portrait">
+              <img src="/assets/tarik-cetinturk.jpg" alt="Tarık Çetintürk portresi" />
+              <figcaption>İstanbul · Türkiye</figcaption>
+            </figure>
           </div>
-          <a className="scroll-cue" href="#hakkimda">Devam et <ArrowDown size={15} /></a>
+          <a className="scroll-cue" href="#hakkimda" aria-label="Hakkımda bölümüne git">
+            Devam et <ArrowDown size={16} />
+          </a>
         </section>
 
-        <section className="section intro" id="hakkimda">
+        <section className="about section" id="hakkimda">
           <div className="section-heading">
-            <p className="kicker">Yaklaşım</p>
-            <h2>Arayüzün arkasında güvenilir bir sistem olmalı.</h2>
+            <p className="kicker">Hakkımda</p>
+            <h2>Teknik derinlik, ürün bakışı ve işi sahiplenme.</h2>
           </div>
-          <div className="intro-copy">
-            <p>
-              Ürün geliştirirken yalnızca çalışan kodu değil; doğru veri modelini, anlaşılır akışları,
-              güvenli dağıtımı ve sürdürülebilir bakımı birlikte düşünüyorum.
-            </p>
-            <p>
-              Bugün odağım .NET tabanlı backend mimarileri, React Native mobil ürünler ve Docker ile
-              üretime taşınan sistemler. Fikri ekrana, ekranı çalışan ürüne bağlayan bütün süreci seviyorum.
-            </p>
+          <div className="about-grid">
+            <div className="about-copy">
+              <p className="large-copy">
+                Bir özelliği yalnızca kodlamakla değil; doğru veri modeli, güvenli API, izlenebilir
+                operasyon ve kullanıcıya ulaşan son deneyimle birlikte ele alıyorum.
+              </p>
+              <p>
+                Profesyonel olarak kurumsal backend sistemleri üzerinde çalışırken Takosware çatısı
+                altında kendi ürünlerimi geliştiriyorum. Ekip içinde açık iletişime, ölçülebilir
+                ilerlemeye ve üretim ortamında sürdürülebilecek çözümlere önem veriyorum.
+              </p>
+            </div>
+            <aside className="principles" aria-label="Çalışma yaklaşımı">
+              <p><ShieldCheck size={20} /><span><strong>Güvenilir altyapı</strong>Hata senaryoları ve veri bütünlüğü en baştan düşünülür.</span></p>
+              <p><Workflow size={20} /><span><strong>Uçtan uca bakış</strong>API'den dağıtıma kadar akışın tamamı sahiplenilir.</span></p>
+              <p><Sparkles size={20} /><span><strong>Sade ürün deneyimi</strong>Teknik karmaşıklık kullanıcıya yük edilmez.</span></p>
+            </aside>
           </div>
         </section>
 
         <section className="skills-band" aria-label="Teknik yetkinlikler">
-          <div className="skills-grid">
-            {skills.map(({ icon: Icon, title, items }) => (
-              <article className="skill" key={title}>
-                <Icon size={24} strokeWidth={1.8} />
+          <div className="skills-inner">
+            {skillGroups.map(({ icon: Icon, title, text }) => (
+              <article className="skill-item" key={title}>
+                <Icon size={23} aria-hidden="true" />
                 <h3>{title}</h3>
-                <p>{items}</p>
+                <p>{text}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section experience" id="deneyim">
-          <div className="section-heading">
-            <p className="kicker">Deneyim</p>
-            <h2>Üretim ortamını bilen bir geliştirme pratiği.</h2>
+        <section className="experience section" id="deneyim">
+          <div className="section-heading split-heading">
+            <div>
+              <p className="kicker">Deneyim ve eğitim</p>
+              <h2>Bugünkü çalışma biçimimi oluşturan yol.</h2>
+            </div>
+            <p>
+              Kurumsal sistemlerden öğrendiklerimi kendi ürünlerime, ürün geliştirirken kazandığım
+              çevikliği de profesyonel işime taşıyorum.
+            </p>
           </div>
-          <div className="timeline">
-            <article className="timeline-item">
-              <div className="timeline-icon"><BriefcaseBusiness /></div>
-              <div>
-                <p className="meta">Backend Developer</p>
-                <h3>Kamyoon</h3>
-                <p>Backend servisleri, iş akışları ve veri katmanı üzerinde ürün ihtiyaçlarına dönük geliştirmeler.</p>
+
+          <div className="journey-grid">
+            <article className="journey-column">
+              <div className="journey-label"><BriefcaseBusiness size={18} /> Profesyonel deneyim</div>
+              <div className="journey-entry current">
+                <span className="entry-date">Güncel</span>
+                <h3>Backend Developer</h3>
+                <p className="entry-subtitle">Kurumsal lojistik ve sevkiyat platformu</p>
+                <p>
+                  Arkas ile yürütülen toplu yük ve sevkiyat operasyonlarının planlandığı, faturalarının
+                  oluşturulduğu ve Loop/SAP süreçleriyle birlikte çalışan büyük ölçekli bir sistemde
+                  backend geliştirmeye devam ediyorum.
+                </p>
+                <p>
+                  C#/.NET servisleri, SQL tabanlı veri akışları, JWT, Hangfire, merkezi loglama,
+                  Ubuntu sunucu işlemleri ve ekip içi geliştirme süreçlerinde aktif sorumluluk alıyorum.
+                  İç operasyon detaylarını şirket politikaları gereği paylaşmıyorum.
+                </p>
               </div>
-            </article>
-            <article className="timeline-item">
-              <div className="timeline-icon"><Boxes /></div>
-              <div>
-                <p className="meta">Kurucu · Bağımsız Product Builder</p>
+              <div className="journey-entry">
+                <span className="entry-date">Bağımsız ürünler</span>
                 <h3>Takosware</h3>
-                <p>Roomora ve BuiltWhys dahil, fikirden canlı altyapıya uzanan bağımsız ürün çalışmaları.</p>
+                <p>
+                  Roomora ve BuiltWhys gibi ürünlerde fikir, tasarım, backend, mobil istemci,
+                  sunucu, dağıtım ve ürün kararlarını uçtan uca yönetiyorum.
+                </p>
               </div>
             </article>
-            <article className="timeline-item">
-              <div className="timeline-icon"><GraduationCap /></div>
-              <div>
-                <p className="meta">Bilişim Sistemleri ve Teknolojileri</p>
+
+            <article className="journey-column education-column">
+              <div className="journey-label"><GraduationCap size={18} /> Eğitim ve topluluk</div>
+              <div className="journey-entry current">
+                <span className="entry-date">Devam ediyor</span>
                 <h3>Trakya Üniversitesi</h3>
-                <p>Devam eden lisans eğitimi; yazılım, sistem ve ürün geliştirme çalışmalarını akademik temelle destekliyor.</p>
+                <p className="entry-subtitle">Bilişim Sistemleri ve Yönetimi</p>
+                <p>
+                  Geçirdiğim trafik kazasının ardından üçüncü sınıfta yatay geçiş yaparak eğitimime
+                  Trakya Üniversitesi'nde devam ettim. Bu değişim, yazılım çalışmalarımı bırakmak
+                  yerine daha disiplinli ve ürün odaklı sürdürdüğüm yeni bir dönem oldu.
+                </p>
+              </div>
+              <div className="journey-entry">
+                <span className="entry-date">2020 · Başlangıç</span>
+                <h3>Doğu Akdeniz Üniversitesi</h3>
+                <p className="entry-subtitle">Matematik ve Bilgisayar Bilimleri (İngilizce) · %100 burs</p>
+                <p>Algoritma, matematiksel düşünme ve bilgisayar bilimleri temellerimi burada oluşturdum.</p>
+              </div>
+              <div className="journey-entry compact-entry">
+                <span className="entry-date">Topluluk</span>
+                <h3>Trakya Üniversitesi TÜBİTAK Topluluğu</h3>
+                <p>Yönetim ekibinde görev alıyor, ekip projelerinin teknik ve organizasyonel süreçlerine katkı sağlıyorum.</p>
               </div>
             </article>
           </div>
         </section>
 
-        <section className="projects" id="urunler">
-          <div className="projects-inner">
-            <div className="section-heading light">
-              <p className="kicker">Seçili işler</p>
-              <h2>Yayınlanan, geliştirilen ve büyütülen ürünler.</h2>
+        <section className="projects" id="projeler">
+          <div className="projects-intro section">
+            <div className="section-heading split-heading light-heading">
+              <div>
+                <p className="kicker">Seçili projeler</p>
+                <h2>Kodun ötesinde, çalışan ürünler.</h2>
+              </div>
+              <p>
+                Her proje farklı bir problemi çözüyor; ortak noktaları gerçek kullanım senaryoları,
+                sürdürülebilir altyapı ve dikkatle kurulmuş ürün akışları.
+              </p>
             </div>
-            <div className="project-grid">
-              {projects.map((project, index) => (
-                <article className={`project ${project.image ? 'featured' : ''}`} key={project.name}>
-                  {project.image && (
-                    <div className="project-media">
-                      <img src={project.image} alt={project.alt} loading={index ? 'lazy' : 'eager'} />
-                    </div>
-                  )}
-                  <div className="project-copy">
-                    <span className="project-type">{project.type}</span>
-                    <h3>{project.name}</h3>
-                    <p>{project.description}</p>
-                    <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                    <a href={project.href} target="_blank" rel="noreferrer" aria-label={`${project.name} bağlantısını aç`}>
-                      İncele <ArrowUpRight size={17} />
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
+          </div>
+          <div className="case-list">
+            <RoomoraCaseStudy />
+            <GezentiCaseStudy />
+            <BuiltWhysCaseStudy />
           </div>
         </section>
 
-        <section className="section contact" id="iletisim">
-          <div>
+        <section className="contact section" id="iletisim">
+          <div className="contact-copy">
             <p className="kicker">İletişim</p>
-            <h2>Bir ürün, sistem veya teknik fikir üzerine konuşalım.</h2>
+            <h2>Bir ürün, ekip ya da teknik problem hakkında konuşalım.</h2>
+            <p>
+              Backend geliştirme, ürün mühendisliği ve otomasyon projeleri için bana e-posta,
+              LinkedIn veya GitHub üzerinden ulaşabilirsin.
+            </p>
           </div>
-          <div className="contact-links">
-            <a href="mailto:destek@takosware.com"><Mail /> destek@takosware.com</a>
-            <a href="https://github.com/taopato" target="_blank" rel="noreferrer"><Github /> github.com/taopato</a>
+          <div className="contact-actions">
+            <a className="contact-row" href={profileLinks.mail}>
+              <span><Mail size={20} /><strong>E-posta</strong></span>
+              <span>destek@takosware.com <ArrowRight size={18} /></span>
+            </a>
+            <a className="contact-row" href={profileLinks.linkedin} target="_blank" rel="noreferrer">
+              <span><Linkedin size={20} /><strong>LinkedIn</strong></span>
+              <span>Tarık Çetintürk <ArrowUpRight size={18} /></span>
+            </a>
+            <a className="contact-row" href={profileLinks.github} target="_blank" rel="noreferrer">
+              <span><Github size={20} /><strong>GitHub</strong></span>
+              <span>taopato <ArrowUpRight size={18} /></span>
+            </a>
           </div>
         </section>
       </main>
 
       <footer>
-        <div className="footer-brand"><Layers3 size={20} /> Takosware</div>
-        <p>Tarık Çetintürk tarafından tasarlandı ve geliştirildi.</p>
-        <a href="#top">Yukarı <ArrowUpRight size={15} /></a>
+        <p>© {new Date().getFullYear()} Tarık Çetintürk · Takosware</p>
+        <a href="#top">Yukarı dön <ArrowUpRight size={15} /></a>
       </footer>
     </>
   );
 }
 
-const personSchema = {
+const schemaData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Tarık Çetintürk',
   jobTitle: 'Backend Developer',
   url: 'https://takosware.com/tarikcetinturk',
-  sameAs: ['https://github.com/taopato'],
-  worksFor: { '@type': 'Organization', name: 'Takosware' },
+  image: 'https://takosware.com/assets/tarik-cetinturk.jpg',
+  sameAs: [profileLinks.linkedin, profileLinks.github],
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'Doğu Akdeniz Üniversitesi' },
+    { '@type': 'CollegeOrUniversity', name: 'Trakya Üniversitesi' },
+  ],
+  knowsAbout: ['C#', '.NET', 'SQL Server', 'JWT', 'Docker', 'React Native', 'Backend Development'],
 };
 
 const schema = document.createElement('script');
 schema.type = 'application/ld+json';
-schema.textContent = JSON.stringify(personSchema);
+schema.textContent = JSON.stringify(schemaData);
 document.head.appendChild(schema);
 
-createRoot(document.getElementById('root')).render(<App />);
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);

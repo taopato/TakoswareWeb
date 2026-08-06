@@ -1,8 +1,8 @@
 # Takosware Web
 
-Takosware kurumsal web varlığının ilk üretim sayfası:
+Takosware web varlığının kişisel portföy sayfası:
 
-- `/tarikcetinturk`: Tarık Çetintürk kişisel portföyü
+- `/tarikcetinturk`: Tarık Çetintürk kişisel portföyü ve özgeçmişi
 
 ## Çalıştırma
 
