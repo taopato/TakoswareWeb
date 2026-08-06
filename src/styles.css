@@ -402,10 +402,18 @@ footer a { display: inline-flex; align-items: center; gap: 6px; text-decoration:
   .hero h1 { margin-bottom: 20px; font-size: 54px; }
   .hero-intro { font-size: 18px; line-height: 1.55; }
   .hero-facts { margin-top: 34px; display: grid; gap: 12px; }
-  .hero-portrait { min-height: 430px; width: 100%; }
+  .hero-portrait {
+    min-height: 0;
+    width: calc(100% - 40px);
+    height: 300px;
+    margin: 0 20px 38px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 8px;
+  }
   .hero-portrait::before { display: none; }
-  .hero-portrait img { inset: 0; height: 100%; object-position: 55% 35%; }
-  .hero-portrait figcaption { left: 20px; bottom: 18px; }
+  .hero-portrait img { inset: 0; height: 100%; object-position: 58% 92%; }
+  .hero-portrait figcaption { left: 14px; bottom: 14px; }
   .scroll-cue { display: none; }
   .section { width: min(100% - 40px, 1180px); }
   .about, .experience { padding: 80px 0; }
