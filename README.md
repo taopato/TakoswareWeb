@@ -1,8 +1,30 @@
 # Takosware Web
 
-Takosware web varlığının kişisel portföy sayfası:
+Tarık Çetintürk'ün portföy sitesi. Roomora, Gezzenti ve BuiltWhys çalışmalarını;
+.NET backend deneyimini ve iletişim bağlantılarını tek sayfada toplar.
 
-- `/tarikcetinturk`: Tarık Çetintürk kişisel portföyü ve özgeçmişi
+Canlı adres: [takosware.com/tarikcetinturk](https://takosware.com/tarikcetinturk)
+
+## İçerik
+
+- Roomora için ev ve gezi senaryoları, Android uygulamasından alınmış örnek veri ekranları ve iki mağazaya giden QR kodlar
+- Kamyoon'un kamuya açık ürün ve Arkas Lojistik referans bilgilerine dayanan deneyim özeti
+- Mobil menü, klavye ile kapatma ve dar ekranlarda yatay taşma kontrolleri
+
+Örnek Roomora ekranlarındaki isimler ve tutarlar kurgusaldır. Görseller uygulamanın
+Android sürümünden alınmıştır; iPhone ekran görüntüsü olarak sunulmaz.
+
+## Yapı
+
+```mermaid
+flowchart LR
+    A[React portföy] --> B[Vite build]
+    B --> C[Nginx container]
+    C --> D[Caddy reverse proxy]
+    D --> E[takosware.com/tarikcetinturk]
+```
+
+Site statik bir React uygulamasıdır; kullanıcı verisi veya Roomora API bağlantısı içermez.
 
 ## Çalıştırma
 

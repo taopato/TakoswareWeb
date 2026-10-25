@@ -15,6 +15,7 @@ import {
   Network,
   ServerCog,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   Users,
   Workflow,
@@ -26,6 +27,11 @@ const profileLinks = {
   linkedin: 'https://www.linkedin.com/in/tarik-cetint%C3%BCrk/',
   github: 'https://github.com/taopato',
   mail: 'mailto:destek@takosware.com',
+};
+
+const roomoraLinks = {
+  ios: 'https://apps.apple.com/app/id6800784560',
+  android: 'https://play.google.com/store/apps/details?id=com.taopato.roomora',
 };
 
 const skillGroups = [
@@ -67,6 +73,15 @@ function Header() {
     return () => document.body.classList.remove('menu-open');
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [open]);
+
   const closeMenu = () => setOpen(false);
 
   return (
@@ -84,12 +99,13 @@ function Header() {
         type="button"
         aria-label={open ? 'Menüyü kapat' : 'Menüyü aç'}
         aria-expanded={open}
+        aria-controls="site-menu"
         onClick={() => setOpen((value) => !value)}
       >
         {open ? <X size={22} /> : <Menu size={22} />}
       </button>
 
-      <nav className={open ? 'site-nav is-open' : 'site-nav'} aria-label="Ana menü">
+      <nav className={open ? 'site-nav is-open' : 'site-nav'} aria-label="Ana menü" id="site-menu">
         <a href="#hakkimda" onClick={closeMenu}>Hakkımda</a>
         <a href="#deneyim" onClick={closeMenu}>Deneyim</a>
         <a href="#projeler" onClick={closeMenu}>Projeler</a>
@@ -120,32 +136,48 @@ function RoomoraCaseStudy() {
           </div>
         </div>
         <p className="case-lead">
-          Ev arkadaşlarının ortak harcamaları, faturaları, ödemeleri ve günlük notları tek yerde
-          yönetmesini sağlayan bir ortak yaşam uygulaması.
+          Evde ya da yolculukta birlikte yapılan harcamaları kimin ödediğini ve kime ne kadar
+          düştüğünü açıkça gösteren mobil uygulama.
         </p>
         <p>
-          React Native ve Expo ile geliştirilen mobil istemci; .NET API, SQL Server ve JWT tabanlı
-          kimlik doğrulama altyapısıyla çalışıyor. Ürün; hızlı harcama ekleme, kişi bazlı bölüşüm,
-          düzenli giderler, kısmi ödeme ve fiş okuma gibi gerçek kullanım senaryolarını kapsıyor.
+          Bir evde kira, su ve elektrik faturasını; bir gezide otel, yemek ve ulaşım giderlerini
+          aynı mantıkla takip edebilirsiniz. Harcamaya yalnızca ilgili kişileri dahil edebilir,
+          borçları kalemlerine kadar inceleyebilir, kısmi ödemeleri kaydedebilirsiniz. Fiş okuma
+          ve hızlı harcama akışları da günlük kullanımı kolaylaştırır.
+        </p>
+        <p>
+          React Native ve Expo istemcisini .NET API, SQL Server ve kimlik doğrulama katmanıyla
+          birlikte geliştirdim. Roomora bugün iPhone ve Android mağazalarında yayında.
         </p>
         <div className="tag-list" aria-label="Roomora teknolojileri">
           <span>React Native</span><span>Expo</span><span>.NET</span><span>SQL Server</span><span>JWT</span>
         </div>
-        <a className="text-link" href="https://github.com/taopato/EvArkadasimMobile" target="_blank" rel="noreferrer">
+        <div className="roomora-store-links">
+          <a href={roomoraLinks.ios} target="_blank" rel="noreferrer"><Smartphone size={18} /> App Store <ArrowUpRight size={16} /></a>
+          <a href={roomoraLinks.android} target="_blank" rel="noreferrer"><Smartphone size={18} /> Google Play <ArrowUpRight size={16} /></a>
+        </div>
+        <div className="roomora-qr-links" aria-label="Roomora indirme QR kodları">
+          <a href={roomoraLinks.ios} target="_blank" rel="noreferrer"><img src="/assets/roomora-ios-qr.png" alt="Roomora App Store bağlantısının QR kodu" /><span>iPhone</span></a>
+          <a href={roomoraLinks.android} target="_blank" rel="noreferrer"><img src="/assets/roomora-android-qr.png" alt="Roomora Google Play bağlantısının QR kodu" /><span>Android</span></a>
+        </div>
+        <a className="text-link" href="https://github.com/taopato/RoomoraMobile" target="_blank" rel="noreferrer">
           Kaynak kodu incele <ArrowUpRight size={17} />
         </a>
       </div>
 
-      <div className="phone-gallery" aria-label="Roomora uygulama ekranları">
-        <figure className="phone-shot phone-shot-primary">
-          <img src="/assets/roomora-home.png" alt="Roomora ana sayfa ekranı" />
-        </figure>
-        <figure className="phone-shot">
-          <img src="/assets/roomora-expenses.png" alt="Roomora giderler ekranı" />
-        </figure>
-        <figure className="phone-shot">
-          <img src="/assets/roomora-bills.png" alt="Roomora faturalar ekranı" />
-        </figure>
+      <div className="roomora-showcase" aria-label="Roomora Android uygulamasından örnek ekranlar">
+        <div className="showcase-heading"><span>Ev bütçesi</span><span>01 / 02</span></div>
+        <div className="phone-gallery">
+          <figure className="phone-shot"><img src="/assets/home-tr-01-home.png" alt="Roomora ev ana sayfası, örnek veriler" /></figure>
+          <figure className="phone-shot"><img src="/assets/home-tr-03-bills.png" alt="Roomora elektrik, su ve internet faturaları, örnek veriler" /></figure>
+          <figure className="phone-shot"><img src="/assets/home-tr-04-balance.png" alt="Roomora kişi bazlı borç ve alacak özeti, örnek veriler" /></figure>
+        </div>
+        <div className="showcase-heading"><span>Gezi hesabı</span><span>02 / 02</span></div>
+        <div className="phone-gallery trip-gallery">
+          <figure className="phone-shot"><img src="/assets/trip-tr-02-home.png" alt="Roomora gezi ana sayfası, örnek veriler" /></figure>
+          <figure className="phone-shot"><img src="/assets/trip-tr-03-expenses.png" alt="Roomora gezi harcamaları, örnek veriler" /></figure>
+        </div>
+        <p className="showcase-note">Android uygulamasından alınmış ekranlar. Kişi ve tutarlar örnektir.</p>
       </div>
     </article>
   );
@@ -232,9 +264,10 @@ function App() {
               <p className="eyebrow">Backend Developer · Product Builder</p>
               <h1 id="hero-title">Tarık Çetintürk</h1>
               <p className="hero-intro">
-                Üretim ortamını bilen; sağlam ve geliştirilebilir mimariler üzerinde, küçük ölçekli
-                servislerden büyük sistemlere uzanan backend çözümleri, mobil ürünler ve günlük işi
-                gerçekten kolaylaştıran otomasyonlar geliştiriyorum.
+                Yazılımı yalnızca çalışan kod olarak görmüyorum. Bir fikrin veri modelinden
+                ekrandaki son dokunuşuna, yayından sonraki bakımına kadar bütün yolculuğuyla
+                ilgileniyorum. Gündüz kurumsal .NET sistemlerinde, kendi zamanımda Takosware
+                ürünlerinde aynı merakla çalışıyorum.
               </p>
               <div className="hero-actions">
                 <a className="button-link primary" href="#projeler">
@@ -274,6 +307,12 @@ function App() {
                 altında kendi ürünlerimi geliştiriyorum. Ekip içinde açık iletişime, ölçülebilir
                 ilerlemeye ve üretim ortamında sürdürülebilecek çözümlere önem veriyorum.
               </p>
+              <p>
+                Benim için iyi mühendislik, yalnızca çalışan bir API teslim etmek değil. Bir kullanıcı
+                hatayı bildirdiğinde nedenini bulabilmek, veriyi güvenle korumak ve ürünü ilk sürümden
+                sonraki aylarda da geliştirebilmektir. .NET tarafındaki işimle Roomora gibi kendi
+                ürünlerimde bu yaklaşımı aynı ciddiyetle uyguluyorum.
+              </p>
             </div>
             <aside className="principles" aria-label="Çalışma yaklaşımı">
               <p><ShieldCheck size={20} /><span><strong>Güvenilir altyapı</strong>Hata senaryoları ve veri bütünlüğü en baştan düşünülür.</span></p>
@@ -312,18 +351,21 @@ function App() {
               <div className="journey-label"><BriefcaseBusiness size={18} /> Profesyonel deneyim</div>
               <div className="journey-entry current">
                 <span className="entry-date">Güncel</span>
-                <h3>Backend Developer</h3>
-                <p className="entry-subtitle">Kurumsal lojistik ve sevkiyat platformu</p>
+                <h3>Backend Developer · Kamyoon</h3>
+                <p className="entry-subtitle">Nakliye yönetim sistemi (TMS)</p>
                 <p>
-                  Arkas ile yürütülen toplu yük ve sevkiyat operasyonlarının planlandığı, faturalarının
-                  oluşturulduğu ve Loop/SAP süreçleriyle birlikte çalışan büyük ölçekli bir sistemde
-                  backend geliştirmeye devam ediyorum.
+                  Kamyoon, taşıma talebinden araç ve sefer planlamasına; saha evrakından navlun
+                  mutabakatı ve faturaya kadar lojistik operasyonlarını tek akışta buluşturan bir
+                  platform. Arkas Lojistik için uyarlanan liman operasyonu da şirketin kamuya açık
+                  referansları arasında yer alıyor.
                 </p>
                 <p>
-                  C#/.NET servisleri, SQL tabanlı veri akışları, JWT, Hangfire, merkezi loglama,
-                  Ubuntu sunucu işlemleri ve ekip içi geliştirme süreçlerinde aktif sorumluluk alıyorum.
-                  İç operasyon detaylarını şirket politikaları gereği paylaşmıyorum.
+                  Bu ortamda C#/.NET servisleri, SQL veri akışları, arka plan işleri, loglama ve
+                  dağıtım süreçleri üzerinde çalışıyorum. Farklı ekiplerin aynı veriye güvenmesi
+                  gereken bir üründe doğruluk, izlenebilirlik ve bakım kolaylığı benim için günlük
+                  mühendislik kararları. İç operasyon ayrıntılarını paylaşmıyorum.
                 </p>
+                <a className="experience-link" href="https://www.kamyoon.com/" target="_blank" rel="noreferrer">Kamyoon'u incele <ArrowUpRight size={15} /></a>
               </div>
               <div className="journey-entry">
                 <span className="entry-date">Bağımsız ürünler</span>

@@ -4,6 +4,8 @@ test('portfolio renders key content without horizontal overflow', async ({ page 
   await page.goto('/tarikcetinturk');
   await expect(page.getByRole('heading', { level: 1, name: 'Tarık Çetintürk' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Roomora' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'App Store', exact: true })).toHaveAttribute('href', /id6800784560/);
+  await expect(page.getByRole('link', { name: 'Google Play', exact: true })).toHaveAttribute('href', /com\.taopato\.roomora/);
   await expect(page.getByRole('heading', { name: 'Gezzenti' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'BuiltWhys Shorts Factory' })).toBeVisible();
   await expect(page.getByText('Doğu Akdeniz Üniversitesi')).toBeVisible();
@@ -28,6 +30,14 @@ test('all portfolio images load successfully', async ({ page }) => {
 test('mobile navigation opens and reaches projects', async ({ page }) => {
   test.skip((page.viewportSize()?.width || 0) > 640, 'Mobil menü yalnızca dar görünümde gösterilir.');
   await page.goto('/tarikcetinturk');
+  await page.getByRole('button', { name: 'Menüyü aç' }).click();
+  const menu = page.getByRole('navigation', { name: 'Ana menü' });
+  await expect(menu).toBeVisible();
+  const bounds = await menu.boundingBox();
+  expect(bounds.y).toBeGreaterThanOrEqual(60);
+  expect(bounds.y + bounds.height).toBeLessThanOrEqual(page.viewportSize().height + 1);
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeHidden();
   await page.getByRole('button', { name: 'Menüyü aç' }).click();
   await page.getByRole('link', { name: 'Projeler', exact: true }).click();
   await expect(page.locator('#projeler')).toBeInViewport();
