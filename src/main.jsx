@@ -65,6 +65,10 @@ const builtWhysSteps = [
   ['İnsan onayı ve yayın', 'Kontrol merkezinden revizyon, onay ve çoklu platform dağıtımı'],
 ];
 
+function TakoswareMark({ tone = 'light', className = '' }) {
+  return <img className={`takosware-mark ${className}`} src={`/assets/takosware-mark-${tone === 'light' ? 'white' : 'black'}.png`} alt="" aria-hidden="true" />;
+}
+
 function Header() {
   const [open, setOpen] = useState(false);
 
@@ -87,10 +91,10 @@ function Header() {
   return (
     <header className="site-header">
       <a className="brand" href="#top" onClick={closeMenu} aria-label="Sayfanın başına git">
-        <span className="brand-mark">TÇ</span>
+        <TakoswareMark className="brand-mark" />
         <span>
-          <strong>Tarık Çetintürk</strong>
-          <small>Takosware</small>
+          <strong>Takosware</strong>
+          <small>Tarık Çetintürk</small>
         </span>
       </a>
 
@@ -149,6 +153,7 @@ function RoomoraCaseStudy() {
           React Native ve Expo istemcisini .NET API, SQL Server ve kimlik doğrulama katmanıyla
           birlikte geliştirdim. Roomora bugün iPhone ve Android mağazalarında yayında.
         </p>
+        <p className="project-credit"><TakoswareMark /> Bir Takosware projesi · Tarık Çetintürk</p>
         <div className="tag-list" aria-label="Roomora teknolojileri">
           <span>React Native</span><span>Expo</span><span>.NET</span><span>SQL Server</span><span>JWT</span>
         </div>
@@ -261,7 +266,7 @@ function App() {
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-inner">
             <div className="hero-copy">
-              <p className="eyebrow">Backend Developer · Product Builder</p>
+              <p className="eyebrow hero-eyebrow"><TakoswareMark /> Backend Developer · Product Builder</p>
               <h1 id="hero-title">Tarık Çetintürk</h1>
               <p className="hero-intro">
                 Yazılımı yalnızca çalışan kod olarak görmüyorum. Bir fikrin veri modelinden
@@ -369,7 +374,7 @@ function App() {
               </div>
               <div className="journey-entry">
                 <span className="entry-date">Bağımsız ürünler</span>
-                <h3>Takosware</h3>
+                <h3 className="with-mark"><TakoswareMark tone="dark" /> Takosware</h3>
                 <p>
                   Roomora ve BuiltWhys gibi ürünlerde fikir, tasarım, backend, mobil istemci,
                   sunucu, dağıtım ve ürün kararlarını uçtan uca yönetiyorum.
@@ -408,7 +413,7 @@ function App() {
           <div className="projects-intro section">
             <div className="section-heading split-heading light-heading">
               <div>
-                <p className="kicker">Seçili projeler</p>
+                <p className="kicker with-mark"><TakoswareMark /> Seçili projeler</p>
                 <h2>Kodun ötesinde, çalışan ürünler.</h2>
               </div>
               <p>
@@ -451,7 +456,7 @@ function App() {
       </main>
 
       <footer>
-        <p>© {new Date().getFullYear()} Tarık Çetintürk · Takosware</p>
+        <p className="footer-brand"><TakoswareMark /> © {new Date().getFullYear()} Takosware · Tarık Çetintürk</p>
         <a href="#top">Yukarı dön <ArrowUpRight size={15} /></a>
       </footer>
     </>

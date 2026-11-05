@@ -3,6 +3,9 @@ import { expect, test } from '@playwright/test';
 test('portfolio renders key content without horizontal overflow', async ({ page }) => {
   await page.goto('/tarikcetinturk');
   await expect(page.getByRole('heading', { level: 1, name: 'Tarık Çetintürk' })).toBeVisible();
+  await expect(page.locator('.site-header .takosware-mark')).toBeVisible();
+  await expect(page.getByText('Bir Takosware projesi')).toBeVisible();
+  await expect(page.locator('footer .takosware-mark')).toHaveAttribute('src', /takosware-mark-white/);
   await expect(page.getByRole('heading', { name: 'Roomora' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'App Store', exact: true })).toHaveAttribute('href', /id6800784560/);
   await expect(page.getByRole('link', { name: 'Google Play', exact: true })).toHaveAttribute('href', /com\.taopato\.roomora/);
