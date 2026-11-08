@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "minimumVersion": "1.0.1",
+    "storeUrl": "https://apps.apple.com/app/id6800784560"
+  },
+  "android": {
+    "minimumVersion": "1.0.1",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.taopato.roomora"
+  }
+}
